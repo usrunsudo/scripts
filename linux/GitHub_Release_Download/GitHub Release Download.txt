@@ -1,0 +1,44 @@
+GitHub Release Download
+Author: @usrunsudo
+
+
+Получить имена всех Assets последнего релиза
+curl -s https://api.github.com/repos/%USER%/%PROJECT%/releases/latest | jq -r ".assets[].name"
+
+Получить ссылки на все Assets последнего релиза для пакетной загрузки через менедзер загрузок
+curl -s https://api.github.com/repos/%USER%/%PROJECT%/releases/latest | jq -r ".assets[].browser_download_url"
+
+Получить ссылки на все Assets релиза по Тэгу для пакетной загрузки через менедзер загрузок
+curl -s https://api.github.com/repos/%USER%/%PROJECT%/releases/tags/%TAG_NAME% | jq -r ".assets[].browser_download_url"
+
+Инфо:
+curl - Кроссплатформенная служебная программа командной строки, позволяющая взаимодействовать с множеством различных серверов по множеству различных протоколов с синтаксисом URL.
+jq - JQuery
+%USER% - имя пользователя на GitHub
+%PROJECT% - название проекта/репозитория на GitHub
+%TAG_NAME% - имя Тэга
+
+
+
+Примеры с использованием JQ (Command-line JSON processor) by stedolan
+curl -s https://api.github.com/repos/VSCodium/vscodium/releases/latest | jq-win64.exe -r ".assets[].name"
+curl -s https://api.github.com/repos/VSCodium/vscodium/releases/latest | jq-win64.exe -r ".assets[].browser_download_url"
+curl -s https://api.github.com/repos/VSCodium/vscodium/releases/tags/1.72.0.22279 | jq-win64.exe -r ".assets[].browser_download_url"
+curl -s https://api.github.com/repos/Kitware/CMake/releases/tags/v3.24.2 | jq-win64.exe -r ".assets[].browser_download_url"
+
+
+
+Addons:
+
+GitHub Docs - REST API / Releases / Releases / get-a-release-by-tag-name
+https://docs.github.com/en/rest/releases/releases#get-a-release-by-tag-name
+
+Command-line JSON processor | include jq
+https://github.com/stedolan/jq
+
+GitHub Action release-downloader
+https://github.com/marketplace/actions/release-downloader
+https://github.com/robinraju/release-downloader
+
+How to download the latest release from Github
+https://www.starkandwayne.com/blog/how-to-download-the-latest-release-from-github/
