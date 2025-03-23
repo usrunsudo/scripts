@@ -26,7 +26,7 @@ sshfs_mount(){
         echo "Директория '$5' отсутствует и будет создана (требуются права sudo)."
         echo "sudo mkdir $5"
         sudo mkdir $5
-        echo "sudo sudo chmod -R 777 $5"
+        echo "sudo chmod -R 777 $5"
         sudo sudo chmod -R 777 $5
     fi
     echo "sshfs -p $3 $1@$2:$4 $5"
