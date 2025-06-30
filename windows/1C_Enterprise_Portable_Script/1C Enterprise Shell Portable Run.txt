@@ -1,0 +1,152 @@
+﻿1C Enterprise Shell Portable Run
+
+Сборка 1С Предприятия для работы в Portable режиме,
+с помощью скрипта CMD и конфигурационных файлов 1С.
+
+
+
+Описание принципа работы
+
+Для запуска 1С Предприятия в Portable режиме
+используется заранее подготовленный CMD файл
+(отдельно для каждой платформы),
+который находится в корне папки со сборкой 1C_Enterprise_Portable
+
+В нем задаются переменные среды, перенаправляющие папки
+%AppData%, %LocalAppData% и %ProgramData%
+в папку с портативной сборкой, с помощью относительных путей
+т.е. не придется редактировать пути к 1С
+в CMD скрипте и конфигурационных файлах 1С
+при переносе папки со сборкой в другое место или при смене буквы диска
+
+Список баз:
+Путь к базе (в списке баз 1С) указывается в коротком виде,
+начиная с наименования директории с базами "DataBase",
+находящейся в корне портативной сборки "[1C_Enterprise_Portable]\DataBase"
+Например: DataBase\TestBase
+
+Ниже идет описание:
+1) настройки конфигурационных файлов 1С для портативной работы
+2) структуры папок для портативной сборки 1с
+3) скрипт для запуска 1С в Portable режиме
+
+P.S. Добавлен файл "[1C_Enterprise_Portable]\AppData\Roaming\1C\1cv8\1cv8.pfl"
+с темной темой модулей конфигурации, кому не нужен - можно просто удалить файл.
+
+
+
+Описание настроек конфигурационных файлов 1С под режим работы в портативном режиме
+
+Файл "[1C_Enterprise_Portable]\1cv8_x32\8.3.19.1264\bin\conf\conf.cfg"
+ConfLocation=%OneS%\1cv8_x32\conf
+
+Файл "[1C_Enterprise_Portable]\1cv8_x64\8.3.19.1264\bin\conf\conf.cfg"
+ConfLocation=%OneS%\1cv8_x64\conf
+
+Файл "[1C_Enterprise_Portable]\AppData\Roaming\1C\1CEStart\1cestart.cfg"
+AppAutoInstallLastVersion=1
+ConfigurationTemplatesLocation=%AppData%\1C\tmplts
+ConfigurationTemplatesLocation=%AppData%\1C\1c8\tmplts
+UseHWLicenses=1
+
+Файл "[1C_Enterprise_Portable]\ProgramData\1C\1CEStart\1cestart.cfg"
+InstalledLocation=%OneS%\1cv8_x32
+InstalledLocation=%OneS%\1cv8_x64
+CommonInfoBases=%AppData%\1C\1CEStart\ibases.v8i
+InstallComponents=DESIGNERALLCLIENTS=1 THINCLIENTFILE=0 THINCLIENT=0 WEBSERVEREXT=0 SERVER=0 CONFREPOSSERVER=0 CONVERTER77=0 SERVERCLIENT=0 ADMINISTRATIONFUNC=0 COPYTHINCLIENTDST=0 LANGUAGES=RU
+
+
+
+Директория
+
+[1C_Enterprise_Portable]
+
+[1C_Enterprise_Portable]\1cv8_x32
+[1C_Enterprise_Portable]\1cv8_x32\8.3.19.1264
+[1C_Enterprise_Portable]\1cv8_x32\8.3.19.1264\bin
+[1C_Enterprise_Portable]\1cv8_x32\8.3.19.1264\bin\conf
+[1C_Enterprise_Portable]\1cv8_x32\8.3.19.1264\bin\conf\conf.cfg
+[1C_Enterprise_Portable]\1cv8_x32\common
+[1C_Enterprise_Portable]\1cv8_x32\common\1cestart.exe
+[1C_Enterprise_Portable]\1cv8_x32\common\1ceunt.dll
+[1C_Enterprise_Portable]\1cv8_x32\common\haspdinst.exe
+[1C_Enterprise_Portable]\1cv8_x32\conf
+[1C_Enterprise_Portable]\1cv8_x32\conf\conf.cfg
+[1C_Enterprise_Portable]\1cv8_x32\conf\nethasp.ini
+
+[1C_Enterprise_Portable]\1cv8_x64
+[1C_Enterprise_Portable]\1cv8_x64\8.3.19.1264
+[1C_Enterprise_Portable]\1cv8_x64\8.3.19.1264\bin
+[1C_Enterprise_Portable]\1cv8_x64\8.3.19.1264\bin\conf
+[1C_Enterprise_Portable]\1cv8_x64\8.3.19.1264\bin\conf\conf.cfg
+[1C_Enterprise_Portable]\1cv8_x64\common
+[1C_Enterprise_Portable]\1cv8_x64\common\1cestart.exe
+[1C_Enterprise_Portable]\1cv8_x64\common\1ceunt.dll
+[1C_Enterprise_Portable]\1cv8_x64\common\haspdinst.exe
+[1C_Enterprise_Portable]\1cv8_x64\conf
+[1C_Enterprise_Portable]\1cv8_x64\conf\conf.cfg
+[1C_Enterprise_Portable]\1cv8_x64\conf\nethasp.ini
+
+[1C_Enterprise_Portable]\DataBase
+
+[1C_Enterprise_Portable]\SystemFolders
+[1C_Enterprise_Portable]\SystemFolders\AppData
+[1C_Enterprise_Portable]\SystemFolders\AppData\Local
+[1C_Enterprise_Portable]\SystemFolders\AppData\Local\1C
+[1C_Enterprise_Portable]\SystemFolders\AppData\Roaming
+[1C_Enterprise_Portable]\SystemFolders\AppData\Roaming\1C
+[1C_Enterprise_Portable]\SystemFolders\AppData\Roaming\1C\1CEStart
+[1C_Enterprise_Portable]\SystemFolders\AppData\Roaming\1C\1CEStart\1cestart.cfg
+[1C_Enterprise_Portable]\SystemFolders\AppData\Roaming\1C\1CEStart\ibases.v8i
+[1C_Enterprise_Portable]\SystemFolders\ProgramData
+[1C_Enterprise_Portable]\SystemFolders\ProgramData\1C
+[1C_Enterprise_Portable]\SystemFolders\ProgramData\1C\1CEStart
+[1C_Enterprise_Portable]\SystemFolders\ProgramData\1C\1CEStart\1CEStart
+[1C_Enterprise_Portable]\SystemFolders\ProgramData\1C\1CEStart\1cestart.cfg
+
+
+
+--- 1c-enterprise-shell-portable-run.cmd ---
+
+@echo off
+REM 1C Enterprise Shell Portable Run Copyright (©) 2021 Nikita Technik
+
+set OneS=%~dp0
+set UserProfile=%OneS%SystemFolders
+set AllUsersProfile=%OneS%SystemFolders\ProgramData
+set ProgramData=%OneS%SystemFolders\ProgramData
+set AppData=%OneS%SystemFolders\AppData\Roaming
+set LocalAppData=%OneS%SystemFolders\AppData\Local
+
+echo 1C Enterprise Shell Portable Run
+echo.
+echo.
+echo.
+echo Environment Variable
+echo.
+echo OneS = %OneS%
+echo UserProfile= %UserProfile%
+echo AllUsersProfile= %AllUsersProfile%
+echo ProgramData = %ProgramData%
+echo AppData = %AppData%
+echo LocalAppData = %LocalAppData%
+echo.
+echo.
+echo.
+echo Run 1C x64 8.3.19.1264
+
+echo.
+PAUSE
+echo.
+
+echo %OneS%1cv8_x64\8.3.19.1264\bin\1cv8.exe
+"%OneS%1cv8_x64\8.3.19.1264\bin\1cv8.exe"
+
+
+
+или
+
+echo %OneS%1cv8_x64\common\1cestart.exe
+"%OneS%1cv8_x64\common\1cestart.exe"
+
+--------------------------------------------
